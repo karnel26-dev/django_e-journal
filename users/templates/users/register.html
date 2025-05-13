@@ -1,0 +1,43 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+
+    <!-- Поля студента (появляются при выборе роли) -->
+    <div id="student-fields" style="display: none;">
+        {{ student_form.as_p }}
+    </div>
+
+    <!-- Поля преподавателя -->
+    <div id="teacher-fields" style="display: none;">
+        {{ teacher_form.as_p }}
+    </div>
+
+    <!-- Поля родителя -->
+    <div id="parent-fields" style="display: none;">
+        {{ parent_form.as_p }}
+    </div>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+
+<script>
+    // Показываем нужные поля в зависимости от роли
+    document.getElementById('id_role').addEventListener('change', function() {
+        const role = this.value;
+        document.getElementById('student-fields').style.display = 'none';
+        document.getElementById('teacher-fields').style.display = 'none';
+        document.getElementById('parent-fields').style.display = 'none';
+
+        if (role === 'student') {
+            document.getElementById('student-fields').style.display = 'block';
+        } else if (role === 'teacher') {
+            document.getElementById('teacher-fields').style.display = 'block';
+        } else if (role === 'parent') {
+            document.getElementById('parent-fields').style.display = 'block';
+        }
+    });
+</script>
+{% endblock content %}
