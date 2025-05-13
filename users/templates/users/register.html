@@ -1,7 +1,7 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<form method="post">
+<form method="post" action="{% url 'users:register' %}">
     {% csrf_token %}
     {{ user_form.as_p }}
 
@@ -24,6 +24,7 @@
 </form>
 
 <script>
+    document.getElementById('student-fields').style.display = 'block';
     // Показываем нужные поля в зависимости от роли
     document.getElementById('id_role').addEventListener('change', function() {
         const role = this.value;

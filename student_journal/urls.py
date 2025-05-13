@@ -19,9 +19,13 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from student_journal import settings
 
+from core.views import index_page
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('users.urls')),
+    path('', index_page, name='index'),
 ]
 
 if settings.DEBUG:

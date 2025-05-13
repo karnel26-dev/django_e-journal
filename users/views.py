@@ -22,7 +22,7 @@ def register(request):
                 profile = profile_form.save(commit=False)
                 profile.user = user
                 profile.save()
-                return redirect('login')
+                return redirect('index')
             else:
                 # Если форма профиля невалидна, передаем её в контекст
                 return render(request, 'users/register.html', {
@@ -32,10 +32,17 @@ def register(request):
         # Если форма пользователя невалидна, передаем только её
         return render(request, 'users/register.html', {
             'user_form': user_form,
+
         })
     else:
         # GET-запрос: передаем все формы в контекст
         user_form = BaseRegisterForm()
+        student_form = StudentProfileForm()
+        teacher_form = TeacherProfileForm()
+        parent_form = ParentProfileForm()
         return render(request, 'users/register.html', {
             'user_form': user_form,
+            'student_form': student_form,
+            'teacher_form': teacher_form,
+            'parent_form': parent_form
         })
