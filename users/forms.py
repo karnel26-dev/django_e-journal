@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
 from .models import StudentProfile, ParentProfile, TeacherProfile
+from student_journal.settings import DATE_INPUT_FORMATS
 
 
 User = get_user_model()
@@ -37,6 +38,14 @@ class BaseRegisterForm(UserCreationForm):
         strip=False,
         widget=forms.PasswordInput,
         # help_text=UserCreationForm.base_fields['password2'].help_text,
+    )
+    birth_date = forms.DateField(
+        input_formats=DATE_INPUT_FORMATS,
+        label='Дата рождения',
+        widget=forms.DateInput(attrs={
+            'class': 'flatpickr',  # Класс для инициализации
+            'data-date-format': 'd-m-Y',  # Формат даты
+        })
     )
 
     class Meta:

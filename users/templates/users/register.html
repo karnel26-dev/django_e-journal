@@ -1,44 +1,36 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<form method="post" action="{% url 'users:register' %}">
+<form method="post">
     {% csrf_token %}
     {{ user_form.as_p }}
 
-    <!-- Поля студента (появляются при выборе роли) -->
-    <div id="student-fields" style="display: none;">
-        {{ student_form.as_p }}
+    <div id="profile-form-container">
+        <!-- Здесь будет загружаться форма профиля -->
     </div>
 
-    <!-- Поля преподавателя -->
-    <div id="teacher-fields" style="display: none;">
-        {{ teacher_form.as_p }}
-    </div>
-
-    <!-- Поля родителя -->
-    <div id="parent-fields" style="display: none;">
-        {{ parent_form.as_p }}
-    </div>
-
-    <button type="submit">Зарегистрироваться</button>
+    <button type="submit">Register</button>
 </form>
 
 <script>
-    document.getElementById('student-fields').style.display = 'block';
-    // Показываем нужные поля в зависимости от роли
-    document.getElementById('id_role').addEventListener('change', function() {
-        const role = this.value;
-        document.getElementById('student-fields').style.display = 'none';
-        document.getElementById('teacher-fields').style.display = 'none';
-        document.getElementById('parent-fields').style.display = 'none';
+    function setStudentForm() {
+        const url = '/accounts/get-profile-form/?role=student';
+        fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('profile-form-container').innerHTML = html;
+        });
+    }
+setStudentForm()
+document.getElementById('id_role').addEventListener('change', function() {
+    const role = this.value;
+    const url = `/accounts/get-profile-form/?role=${role}`;
 
-        if (role === 'student') {
-            document.getElementById('student-fields').style.display = 'block';
-        } else if (role === 'teacher') {
-            document.getElementById('teacher-fields').style.display = 'block';
-        } else if (role === 'parent') {
-            document.getElementById('parent-fields').style.display = 'block';
-        }
-    });
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('profile-form-container').innerHTML = html;
+        });
+});
 </script>
 {% endblock content %}

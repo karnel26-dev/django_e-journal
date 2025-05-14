@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
 </head>
 <body>
 {% block content %}
 {% endblock content %}
+<script>
+  flatpickr(".flatpickr", {
+    dateFormat: "d-m-Y",
+    locale: "ru",
+    defaultDate: new Date()
+  });
+</script>
 </body>
 </html>
