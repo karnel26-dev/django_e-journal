@@ -13,16 +13,13 @@ POSITIONS = (
         ('teacher', 'Преподаватель'),
         ('senior_lecturer', 'Старший преподаватель'),
         ('associate_professor', 'Доцент'),
-        ('professor', 'Профессор'),
+        ('professor', 'Профессор')
 )
 
-GROUPS = (
-        ('1132', '1132'),
-        ('1133', '1133'),
-        ('1245', '1245'),
-        ('1246', '1246'),
-        ('2346', '2346'),
-)
+class StudentGroup(models.Model):
+    number = models.CharField(max_length=4)
+    teachers = models.ManyToManyField('User', related_name='st_groups')
+
 
 class User(AbstractUser):
     ROLES = (
@@ -37,7 +34,7 @@ class User(AbstractUser):
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     faculty = models.CharField(max_length=100, choices=FACULTIES)
-    group = models.CharField(max_length=10, choices=GROUPS)
+    group = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
 
 class TeacherProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')

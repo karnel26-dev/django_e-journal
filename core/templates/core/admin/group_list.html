@@ -1,0 +1,12 @@
+{% extends 'core/admin/base_admin.html' %}
+
+{% block content %}
+
+<div class="admin-group-list">
+    {% for group in groups %}
+        <div class="admin-group-item">
+            {{ group }}
+        </div>
+</div>
+
+{% endblock content %}

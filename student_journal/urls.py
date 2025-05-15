@@ -25,6 +25,7 @@ from core.views import index_page
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('users.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('', index_page, name='index'),
 ]
 
